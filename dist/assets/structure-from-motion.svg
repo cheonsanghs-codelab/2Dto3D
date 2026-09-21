@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="563" height="354" viewBox="0 0 563 354" role="img" aria-labelledby="title desc">
+  <title id="title">Structure from Motion</title>
+  <desc id="desc">서로 다른 두 카메라 중심에서 동일한 3차원 점 P를 관측하고, 각 이미지 평면에 투영점이 형성되는 구조</desc>
+  <defs>
+    <filter id="greenGlow" x="-180%" y="-180%" width="460%" height="460%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-color="#00ff91" flood-opacity="0.75" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .camera { fill:#071014; stroke:#00c7ee; stroke-width:2.6; stroke-linejoin:round; }
+      .ray { fill:none; stroke:#00ff91; stroke-width:2; stroke-dasharray:8 7; }
+      .plane { fill:none; stroke:#94aaa5; stroke-width:4.5; stroke-linecap:round; }
+      .projection { fill:#071014; stroke:#00ff91; stroke-width:3; }
+      .center { fill:#00c7ee; }
+      .baseline { fill:none; stroke:#26383d; stroke-width:1.2; stroke-dasharray:4 7; }
+      .label { fill:#bff8df; font:12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:1.6px; }
+      .small { fill:#8ea49f; font:10px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    </style>
+  </defs>
+
+  <rect width="563" height="354" fill="#050b0d"/>
+
+  <!-- 카메라 중심 사이의 기준선 -->
+  <path class="baseline" d="M150 236 H413"/>
+
+  <!-- 두 카메라 중심에서 동일한 3차원 점으로 향하는 관측 광선 -->
+  <path class="ray" d="M150 236 L282 46"/>
+  <path class="ray" d="M413 236 L282 46"/>
+
+  <!-- 광선에 수직인 이미지 평면과 광선-평면의 투영점 -->
+  <g aria-label="VIEW A 이미지 평면과 투영점">
+    <path class="plane" d="M184 141 L227 171"/>
+    <circle class="projection" cx="205.5" cy="156" r="5.5"/>
+    <text class="small" x="174" y="129">IMAGE PLANE</text>
+  </g>
+  <g aria-label="VIEW B 이미지 평면과 투영점">
+    <path class="plane" d="M337 171 L379 141"/>
+    <circle class="projection" cx="358" cy="156" r="5.5"/>
+    <text class="small" x="340" y="129">IMAGE PLANE</text>
+  </g>
+
+  <!-- 실제 공간의 동일한 점 -->
+  <g aria-label="3차원 점 P">
+    <circle cx="282" cy="46" r="10.5" fill="#00ff91" filter="url(#greenGlow)"/>
+    <circle cx="282" cy="46" r="10.5" fill="#00ff91"/>
+    <text class="label" x="299" y="51">P</text>
+  </g>
+
+  <!-- 카메라 A: 렌즈 끝의 C_A가 관측 광선의 정확한 시작점 -->
+  <g aria-label="카메라 VIEW A">
+    <path class="camera" d="M43 271 L89 230 Q92 227 96 230 L126 260 Q130 264 127 268 L79 311 Q75 314 71 310 L43 279 Q40 275 43 271 Z"/>
+    <path class="camera" d="M96 230 L113 199 L150 236 L126 260 Z"/>
+    <circle class="center" cx="150" cy="236" r="3.5"/>
+    <text class="small" x="157" y="250">C_A</text>
+  </g>
+
+  <!-- 카메라 B: 렌즈 끝의 C_B가 관측 광선의 정확한 시작점 -->
+  <g aria-label="카메라 VIEW B">
+    <path class="camera" d="M437 260 L467 230 Q471 227 474 230 L521 271 Q525 275 522 279 L494 310 Q490 314 486 311 L439 268 Q435 264 437 260 Z"/>
+    <path class="camera" d="M413 236 L450 199 L467 230 L437 260 Z"/>
+    <circle class="center" cx="413" cy="236" r="3.5"/>
+    <text class="small" x="382" y="250">C_B</text>
+  </g>
+
+  <text class="label" x="46" y="323">VIEW A</text>
+  <text class="label" x="426" y="323">VIEW B</text>
+</svg>

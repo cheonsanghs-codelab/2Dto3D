@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#080d10" />
+  <meta name="description" content="코드랩 동아리의 COLMAP·Hunyuan3D 2D 사진 3D 복원 탐구 발표" />
+  <title>코드랩 | 2D 사진의 3D 복원</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23080d10'/%3E%3Cpath d='M12 18h40M12 32h25M12 46h32' stroke='%2300ef75' stroke-width='5'/%3E%3Ccircle cx='48' cy='32' r='5' fill='%2300bddd'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+  <main class="deck">
+    <div class="progress-line"><span id="progressBar"></span></div>
+    <header class="topbar">
+      <button class="school-mark" type="button" data-action="overview" aria-label="발표 순서 열기">
+        <span class="atom" aria-hidden="true">⌘</span><span>천상고 동아리 학술제</span>
+      </button>
+    </header>
+
+    <section class="slides" id="slides" aria-label="발표 슬라이드">
+      <article class="slide cover active" data-speaker="A / 지승현" >
+        <img class="cover-photo" src="assets/code-background.jpeg" alt="코드가 표시된 화면" />
+        <div class="cover-shade"></div>
+        <div class="cover-content">
+          <p class="terminal-label">[ STUDIO CODELAB ]</p>
+          <h1><span>COLMAP</span><span>HUNYUAN3D</span></h1>
+          <p class="cover-title">2D 사진의 3D 복원</p>
+          <p class="cover-members">20824지승현 | 20816김준엽 | 20320김명훈 | 11035황성윤</p>
+        </div>
+        <aside class="speaker-notes">안녕하세요. 저희는 프로그래밍 동아리 코드랩입니다. 오늘은 동아리 활동을 간단히 소개한 뒤, COLMAP과
+          Hunyuan3D를 이용한 2D 사진의 3D 복원 탐구를 발표하겠습니다.</aside>
+      </article>
+
+      <article class="slide" data-speaker="동아리 소개">
+        <div class="slide-head"><span>01</span>
+          <h2>코드랩 활동</h2>
+        </div>
+        <div class="club-layout">
+          <div class="club-copy">
+            <p class="lead-copy">프로그래밍을 배우고<br />직접 제작하는 동아리</p>
+            <dl class="term-list">
+              <div>
+                <dt>1학기</dt>
+                <dd>웹사이트 제작</dd>
+              </div>
+              <div>
+                <dt>2학기</dt>
+                <dd>컴퓨터 비전과 3D 복원</dd>
+              </div>
+            </dl>
+          </div>
+          <figure class="photo-cut"><img src="assets/IntroCard_CODELAB.png" alt="코드랩 소개 카드" />
+            <figcaption>코드랩 소개 카드</figcaption>
+          </figure>
+        </div>
+        <aside class="speaker-notes">코드랩은 프로그래밍을 실제 프로젝트에 적용하며 문제 해결 능력을 기르는 동아리입니다. 1학기에는 웹사이트를
+          제작했고, 2학기에는 컴퓨터 비전과 3D 복원으로 활동 범위를 넓혔습니다.</aside>
+      </article>
+
+      <article class="slide" data-speaker="탐구1">
+        <div class="slide-head"><span>02</span>
+          <h2>탐구 문제</h2>
+        </div>
+        <div class="question-layout">
+          <p class="big-question">2D 사진만으로<br /><b>3D 형태</b>를 어떻게 복원할까?</p>
+          <ol class="route-list">
+            <li><span>01</span><strong>COLMAP</strong><small>여러 사진의 위치 관계 계산</small></li>
+            <li><span>02</span><strong>3DGS</strong><small>사실적인 새 시점 생성 계획</small></li>
+            <li class="route-stop"><span>03</span><strong>Hunyuan3D</strong><small>사진 부족 이후 선택한 대안</small></li>
+          </ol>
+        </div>
+        <aside class="speaker-notes"> 탐구 문제는 ‘2D 사진만으로 3D 형태를 어떻게 복원할 수 있는가?’였습니다. 먼저 COLMAP을 실습했고,
+          3DGS까지 적용하려 했지만 사진이 부족했습니다. 이후 적은 입력에서도 작동하는 Hunyuan3D를 함께 비교했습니다.</aside>
+      </article>
+
+      <article class="slide" data-speaker="탐구 - SfM" >
+        <div class="slide-head"><span>03</span>
+          <h2>카메라 시점의 이동</h2>
+        </div>
+        <div class="sfm-layout">
+          <div class="sfm-copy">
+            <p class="command">$ explain sfm</p>
+            <p>같은 점이 사진마다 다른 위치에 나타나는 현상을 이용해 카메라 위치와 3D 구조를 계산합니다.</p>
+            <p class="definition-line"><b>SfM</b> Structure from Motion</p>
+          </div><img class="sfm-figure" src="assets/structure-from-motion.svg" alt="SfM 구조" />
+        </div>
+        <aside class="speaker-notes"> COLMAP의 핵심은 SfM입니다. 카메라가 이동하며 같은 물체를 촬영하면 사진 속 같은 점의 위치가
+          달라집니다. COLMAP은 이 차이로 카메라 위치와 장면의 3차원 구조를 함께 계산합니다.</aside>
+      </article>
+
+      <article class="slide" data-speaker="탐구 - 특징점과 Descriptor" >
+        <div class="slide-head"><span>04</span>
+          <h2>특징점과 Descriptor</h2>
+        </div>
+        <div class="feature-layout">
+            <img class="sfm-figure" src="assets/feature-descriptor.svg" alt="특징점 추출" />
+          </svg>
+          <div class="term-definitions">
+            <div><span>KEYPOINT</span><strong>특징점의 위치</strong>
+              <p>모서리, 글자, 무늬처럼 구별하기 쉬운 부분</p>
+            </div>
+            <div><span>DESCRIPTOR</span><strong>주변 모양의 숫자 표현</strong>
+              <p>다른 사진에서 같은 특징점을 찾는 기준</p>
+            </div>
+          </div>
+        </div>
+        <aside class="speaker-notes"> 첫 단계는 특징점 추출입니다. 모서리나 글자처럼 구별하기 쉬운 위치가 Keypoint이고, 그 주변의 모습을
+          숫자로 표현한 것이 Descriptor입니다. COLMAP은 SIFT 계열 방법으로 특징을 찾고 설명합니다.</aside>
+      </article>
+
+      <article class="slide" data-speaker="탐구 - 특징점 매칭과 검증" >
+        <div class="slide-head"><span>05</span>
+          <h2>특징점 매칭과 검증</h2>
+        </div>
+        <div class="matching-layout">
+          <img class="sfm-figure" src="assets/feature-matching.svg" alt="특징점 매칭" />
+          <div class="verify-list">
+            <div><span>01</span><strong>Feature Matching</strong>
+              <p>Descriptor가 비슷한 점을 연결</p>
+            </div>
+            <div><span>02</span><strong>Ratio Test</strong>
+              <p>첫 후보와 둘째 후보가 비슷한 매칭 제거</p>
+            </div>
+            <div><span>03</span><strong>RANSAC</strong>
+              <p>Epipolar 규칙과 맞지 않는 Outlier 제거</p>
+            </div>
+          </div>
+        </div>
+        <aside class="speaker-notes"> Descriptor가 비슷한 점을 먼저 연결합니다. Ratio Test는 첫 후보와 둘째 후보가 비슷한 애매한
+          매칭을 지웁니다. 이후 RANSAC이 Epipolar Geometry와 맞지 않는 Outlier를 제거해 신뢰할 수 있는 Inlier만 남깁니다.</aside>
+      </article>
+
+      <article class="slide" data-speaker="탐구 - 3D 좌표 계산" >
+        <div class="slide-head"><span>06</span>
+          <h2>3D 좌표 계산</h2>
+        </div>
+        <div class="calculation-layout"><svg class="triangulation" viewBox="0 0 620 420" role="img"
+            aria-label="삼각측량 구조">
+            <path class="axis" d="M60 350H560" />
+            <path class="ray" d="M130 330L315 95L500 330" />
+            <circle class="target" cx="315" cy="95" r="11" />
+            <rect class="camera-block" x="88" y="315" width="80" height="52" />
+            <rect class="camera-block" x="460" y="315" width="80" height="52" /><text x="276" y="67">3D
+              POINT</text></svg>
+          <ol class="calculation-steps">
+            <li><span>01</span><strong>Triangulation</strong>
+              <p>두 시선으로 3D 좌표 계산</p>
+            </li>
+            <li><span>02</span><strong>Incremental SfM</strong>
+              <p>사진을 하나씩 추가하며 구조 확장</p>
+            </li>
+            <li><span>03</span><strong>Bundle Adjustment</strong>
+              <p>재투영 오차를 줄여 전체 위치 보정</p>
+            </li>
+          </ol>
+        </div>
+        <aside class="speaker-notes"> 신뢰할 수 있는 대응점은 Triangulation으로 3D 좌표가 됩니다. COLMAP은 두 사진에서 시작해 새
+          사진을 하나씩 추가하는 Incremental SfM으로 구조를 확장합니다. Bundle Adjustment는 카메라와 3D 점을 함께 조정해 Reprojection Error를 줄입니다.
+        </aside>
+      </article>
+
+      <article class="slide" data-speaker="탐구 - 희소 재구성" >
+        <div class="slide-head"><span>07</span>
+          <h2>희소 재구성</h2>
+        </div>
+        <div class="cloud-layout"><canvas id="sparseCloud" aria-label="희소 점군 개념 시각화"></canvas>
+          <div class="cloud-text">
+            <p class="command">$ colmap mapper</p>
+            <p class="cloud-result">SPARSE<br />POINT CLOUD</p>
+            <p>여러 사진에서 안정적으로 연결된 특징점만 3D 좌표로 남습니다.</p><small>개념 시각화</small>
+          </div>
+        </div>
+        <aside class="speaker-notes"> 이 과정을 거치면 카메라 위치와 Sparse Point Cloud를 얻습니다. 사진의 모든 픽셀이 아니라
+          안정적으로 매칭된 특징점만 3차원 점이 되기 때문에 점들이 띄엄띄엄 보입니다.</aside>
+      </article>
+
+      <article class="slide" data-speaker="탐구 - 실패 사례" >
+        <div class="slide-head"><span>08</span>
+          <h2>실패 사례</h2>
+        </div>
+        <div class="result-layout">
+          <div class="result-visuals failure" aria-label="실패 사례의 촬영 대상과 실제 점군 비교">
+            <figure class="result-shot">
+              <img src="assets/fail_img.jpg" alt="실패 사례의 촬영 대상인 피규어" />
+              <figcaption><span>INPUT</span>촬영 대상</figcaption>
+            </figure>
+            <figure class="result-shot result-pointcloud">
+              <img src="assets/fail_pointcloud.png" alt="피규어 복원에 실패해 형태가 흩어진 실제 희소 점군" />
+              <figcaption><span>OUTPUT</span>실제 희소 점군</figcaption>
+            </figure>
+          </div>
+          <div class="result-copy">
+            <p class="result-keyword error">MATCH FAILED</p>
+            <ul>
+              <li><b>사진 중첩 부족</b><span>같은 특징점을 찾기 어려움</span></li>
+              <li><b>큰 촬영 각도 차이</b><span>사진 사이 연결 감소</span></li>
+              <li><b>단색과 반사 표면</b><span>사용 가능한 특징점 감소</span></li>
+            </ul>
+          </div>
+        </div>
+        <aside class="speaker-notes"> 첫 실습에서는 점이 일부만 생기거나 잘못된 위치에 흩어져 형태를 알아보기 어려웠습니다. 사진 사이의 공통 영역이
+          적고 촬영 각도가 크게 변했으며, 단색이나 반사 표면에서는 특징점 자체가 부족했습니다.</aside>
+      </article>
+
+      <article class="slide" data-speaker="탐구 - 성공 사례" >
+        <div class="slide-head"><span>09</span>
+          <h2>성공 사례</h2>
+        </div>
+        <div class="result-layout result-layout-success">
+          <div class="result-visuals success" aria-label="성공 사례의 촬영 대상, 실제 점군과 3D 모델 비교">
+            <figure class="result-shot">
+              <img src="assets/success_img.jpg" alt="성공 사례의 촬영 대상인 빨간 인형" />
+              <figcaption class="result-caption-detail">
+                <span>촬영 조건</span><strong>충분한 중첩 · 일정한 촬영 간격</strong>
+              </figcaption>
+            </figure>
+            <figure class="result-shot result-pointcloud">
+              <img src="assets/success_pointcloud.png" alt="빨간 인형의 형태가 나타난 실제 희소 점군" />
+              <figcaption class="result-caption-detail">
+                <span>복원 결과</span><strong>특징점 연결 안정</strong>
+              </figcaption>
+            </figure>
+            <figure class="result-shot result-model">
+              <div class="model-stage">
+                <model-viewer src="assets/reconstructed_shape.glb"
+                  alt="성공적으로 복원된 빨간 인형의 인터랙티브 3D 모델" camera-controls auto-rotate
+                  auto-rotate-delay="0" rotation-per-second="18deg" interaction-prompt="none"
+                  shadow-intensity="1" exposure="1.15" loading="lazy" touch-action="pan-y"></model-viewer>
+                <span class="model-hint">DRAG / ZOOM</span>
+              </div>
+              <figcaption class="result-caption-detail">
+                <span>최종 결과</span><strong>물체 윤곽 복원 성공</strong>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+        <aside class="speaker-notes"> 사진 사이 중첩을 충분히 확보하고 특징이 많은 대상을 사용하자 점들이 물체 윤곽을 따라 안정적으로 분포했습니다.
+          점군을 Mesh로 바꿔 실제 3D 인쇄물도 제작했습니다. 지금 실물을 보여드리겠습니다.</aside>
+      </article>
+
+      <article class="slide" data-speaker="탐구 - 3DGS 적용 한계" >
+        <div class="slide-head"><span>10</span>
+          <h2>3DGS 적용 한계</h2>
+        </div>
+        <div class="gs-layout">
+          <div class="gs-plan">
+            <div><span>01</span><strong>COLMAP</strong><small>카메라 위치와 희소 점군</small></div><i></i>
+            <div><span>02</span><strong>3DGS</strong><small>Gaussian 기반 장면 표현</small></div><i class="stopped"></i>
+            <div class="muted"><span>03</span><strong>새로운 시점</strong><small>적용 보류</small></div>
+          </div>
+          <p class="limitation">사진 수와 촬영 방향이 부족해 안정적인 다중 시점 정보를 확보하지 못했습니다.</p>
+        </div>
+        <aside class="speaker-notes"> 원래 COLMAP의 카메라와 점군으로 3DGS를 적용해 더 사실적인 새 시점을 만들 계획이었습니다. 하지만
+          다양한 방향의 사진과 안정적인 카메라 정보가 부족해 원하는 결과를 얻기 어렵다고 판단했습니다.</aside>
+      </article>
+
+      <article class="slide" data-speaker="탐구 - Hunyuan3D" >
+        <div class="slide-head"><span>11</span>
+          <h2>Hunyuan3D</h2>
+        </div>
+        <div class="hunyuan-layout">
+          <div class="hunyuan-process">
+            <div><span>INPUT</span><b>사진 1장</b></div><i></i>
+            <div><span>AI</span><b>형태 추정</b></div><i></i>
+            <div><span>OUTPUT</span><b>3D 모델</b></div>
+          </div>
+          <p class="hunyuan-explain">사진에 보이지 않는 옆면과 뒷면도 학습한 형태 정보를 바탕으로 생성합니다.</p>
+          <p class="caution">[ 주의 ] 생성된 뒷면은 실제 관측값이 아니라 AI의 추정 결과입니다.</p>
+        </div>
+        <aside class="speaker-notes"> 대안으로 사용한 Hunyuan3D는 대표 사진 한 장에서도 전체 3D 모델을 생성합니다. 보이지 않는 옆면과
+          뒷면은 AI가 학습한 형태 정보를 바탕으로 추정합니다. 적은 사진에 유리하지만 실제 뒷면과 다를 수 있습니다.</aside>
+      </article>
+
+      <article class="slide" data-speaker="탐구 - 복원과 생성" >
+        <div class="slide-head"><span>12</span>
+          <h2>복원과 생성</h2>
+        </div>
+        <div class="diff-layout">
+          <section class="diff-col colmap">
+            <p>[-] COLMAP</p>
+            <h3>관측 기반 복원</h3>
+            <ul>
+              <li>여러 방향의 사진</li>
+              <li>실제 대응점과 기하학</li>
+              <li>카메라 위치와 3D 좌표 계산</li>
+              <li>촬영 조건에 민감</li>
+            </ul>
+          </section>
+          <section class="diff-col hunyuan">
+            <p>[+] Hunyuan3D</p>
+            <h3>AI 기반 생성</h3>
+            <ul>
+              <li>한 장 또는 적은 사진</li>
+              <li>입력 이미지와 학습 정보</li>
+              <li>보이지 않는 면까지 생성</li>
+              <li>원본과 다른 구조 가능</li>
+            </ul>
+          </section>
+        </div>
+        <aside class="speaker-notes"> COLMAP은 여러 사진의 실제 대응점을 기하학적으로 연결하는 관측 기반 복원입니다. Hunyuan3D는 적은
+          입력에서 보이지 않는 면까지 만드는 AI 기반 생성입니다. 목적과 데이터에 따라 적합한 방법이 달라집니다.</aside>
+      </article>
+
+      <article class="slide conclusion" data-speaker="결론" >
+        <div class="slide-head"><span>13</span>
+          <h2>탐구 결론</h2>
+        </div>
+        <div class="conclusion-layout">
+          <ol>
+            <li><span>01</span>
+              <p><b>알고리즘의 연결</b><br />특징점 추출부터 Bundle Adjustment까지 모든 단계가 최종 결과에 영향</p>
+            </li>
+            <li><span>02</span>
+              <p><b>입력 데이터의 품질</b><br />사진 중첩, 촬영 간격, 표면과 조명 조건의 중요성 확인</p>
+            </li>
+            <li><span>03</span>
+              <p><b>두 방식의 차이</b><br />실제 관측 기반 복원과 AI 기반 생성의 장단점 비교</p>
+            </li>
+          </ol>
+          <div class="next-study"><span>$ next</span>
+            <p>더 많은 사진으로 Dense Reconstruction과 3DGS 적용</p>
+          </div>
+        </div>
+        <p class="thank-you">THANK YOU</p>
+        <aside class="speaker-notes"> 이번 탐구로 알고리즘의 각 단계가 연결되어 있고, 입력 데이터의 품질이 결과를 크게 좌우한다는 점을
+          확인했습니다. 3DGS 실패를 Hunyuan3D 비교로 확장한 것도 의미가 있었습니다. 다음에는 더 많은 사진으로 Dense Reconstruction과 3DGS까지 비교하겠습니다. 감사합니다.
+        </aside>
+      </article>
+    </section>
+
+    <footer class="bottombar">
+      <div class="key-guide"><span><kbd>SPACE</kbd> next</span><span><kbd>←</kbd><kbd>→</kbd>
+          nav</span><span><kbd>F</kbd> fullscreen</span><span><kbd>S</kbd> notes</span></div>
+      <div class="page-number" id="slideCount">01 / 14</div>
+    </footer>
+    <aside class="overview-panel" id="overviewPanel" aria-hidden="true">
+      <div class="overview-title"><span>$ cat agenda.txt</span><button type="button" data-action="overview"
+          aria-label="발표 순서 닫기">ESC</button></div>
+      <div id="overviewList" class="overview-list"></div>
+    </aside>
+    <div class="overview-backdrop" data-action="overview" aria-hidden="true"></div>
+  </main>
+  <script type="module" src="assets/model-viewer.min.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="523" height="294" viewBox="0 0 523 294" role="img" aria-labelledby="title desc">
+  <title id="title">특징점과 Descriptor</title>
+  <desc id="desc">이미지에서 찾은 특징점과 그 주변의 방향 정보를 격자형 Descriptor로 변환하는 과정</desc>
+  <defs>
+    <filter id="greenGlow" x="-180%" y="-180%" width="460%" height="460%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-color="#00ff91" flood-opacity="0.75" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0 0 L6 3 L0 6 Z" fill="#00ff91"/>
+    </marker>
+    <style>
+      .frame { fill:#071014; stroke:#26383d; stroke-width:1.2; }
+      .edge { fill:none; stroke:#94aaa5; stroke-width:4; stroke-linejoin:round; stroke-linecap:round; }
+      .keypoint { fill:#071014; stroke:#00ff91; stroke-width:3; }
+      .region { fill:none; stroke:#00ff91; stroke-width:1.4; stroke-dasharray:5 5; opacity:.75; }
+      .connector { fill:none; stroke:#00c7ee; stroke-width:1.4; stroke-dasharray:5 5; }
+      .grid { fill:none; stroke:#3a4c50; stroke-width:1; }
+      .vector { fill:none; stroke:#00ff91; stroke-width:1.8; stroke-linecap:round; marker-end:url(#arrow); }
+      .label { fill:#bff8df; font:11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:1.4px; }
+      .caption { fill:#8ea49f; font:10px sans-serif; }
+    </style>
+  </defs>
+
+  <rect width="523" height="294" fill="#050b0d"/>
+
+  <!-- 특징점: 이미지 윤곽의 모서리 위치 -->
+  <g aria-label="이미지와 특징점">
+    <rect class="frame" x="24" y="35" width="210" height="194" rx="2"/>
+    <path class="edge" d="M57 194 V82 H183 V194"/>
+    <circle class="keypoint" cx="57" cy="82" r="6.5"/>
+    <circle class="keypoint" cx="57" cy="194" r="6.5"/>
+    <circle class="keypoint" cx="183" cy="194" r="6.5"/>
+    <circle cx="183" cy="82" r="7" fill="#00ff91" filter="url(#greenGlow)"/>
+    <circle class="keypoint" cx="183" cy="82" r="8"/>
+    <circle class="region" cx="183" cy="82" r="31"/>
+    <text class="caption" x="145" y="124">주변 영역</text>
+  </g>
+
+  <!-- 선택한 특징점 주변 영역을 Descriptor 격자로 전달 -->
+  <path class="connector" d="M214 82 C252 82 263 73 291 73"/>
+
+  <!-- Descriptor: 4×4 공간 격자 안의 대표 방향 벡터 -->
+  <g aria-label="특징점 Descriptor">
+    <path class="grid" d="M303 43 H471 V211 H303 Z M345 43 V211 M387 43 V211 M429 43 V211 M303 85 H471 M303 127 H471 M303 169 H471"/>
+
+    <path class="vector" d="M316 78 L331 64"/>
+    <path class="vector" d="M356 64 L373 78"/>
+    <path class="vector" d="M397 72 L419 72"/>
+    <path class="vector" d="M449 79 L449 61"/>
+
+    <path class="vector" d="M315 112 L333 102"/>
+    <path class="vector" d="M357 106 L375 106"/>
+    <path class="vector" d="M398 101 L418 118"/>
+    <path class="vector" d="M441 116 L459 100"/>
+
+    <path class="vector" d="M316 145 L331 161"/>
+    <path class="vector" d="M365 162 L365 142"/>
+    <path class="vector" d="M398 157 L418 142"/>
+    <path class="vector" d="M440 148 L460 158"/>
+
+    <path class="vector" d="M316 199 L332 183"/>
+    <path class="vector" d="M356 190 L375 190"/>
+    <path class="vector" d="M398 183 L419 200"/>
+    <path class="vector" d="M450 201 L450 181"/>
+  </g>
+
+  <text class="label" x="24" y="260">KEYPOINT · LOCATION</text>
+  <text class="label" x="303" y="260">DESCRIPTOR · LOCAL PATTERN</text>
+</svg>

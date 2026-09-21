@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="340" viewBox="0 0 640 340" role="img" aria-labelledby="title desc">
+  <title id="title">특징점 매칭</title>
+  <desc id="desc">두 이미지의 실제 특징점 좌표를 직접 연결하여 세 개의 올바른 매칭과 하나의 잘못된 매칭을 구분한 도식</desc>
+  <defs>
+    <filter id="greenGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="4.5" result="blur"/>
+      <feFlood flood-color="#00ff91" flood-opacity="0.75" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .frame { fill:#071014; stroke:#26383d; stroke-width:1.2; }
+      .edge { fill:none; stroke:#52666a; stroke-width:2.5; stroke-linejoin:round; }
+      .match { fill:none; stroke:#00e889; stroke-width:1.6; opacity:.9; }
+      .outlier { fill:none; stroke:#ff5a69; stroke-width:1.8; stroke-dasharray:6 5; }
+      .halo { fill:#00ff91; filter:url(#greenGlow); }
+      .keypoint { fill:#00ff91; }
+      .label { fill:#bff8df; font:11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:1.5px; }
+      .legend { fill:#8ea49f; font:10px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    </style>
+  </defs>
+
+  <rect width="640" height="340" fill="#050b0d"/>
+  <text class="label" x="18" y="24">IMAGE A</text>
+  <text class="label" x="377" y="24">IMAGE B</text>
+
+  <rect class="frame" x="18" y="35" width="245" height="255"/>
+  <rect class="frame" x="377" y="35" width="245" height="255"/>
+
+  <!-- 같은 윤곽이 다른 시점에서 이동·변형된 모습 -->
+  <path class="edge" d="M80 245 V90 H225 V245"/>
+  <path class="edge" d="M435 250 V100 H580 V250"/>
+
+  <!-- 선은 각 특징점의 중심 좌표에서 직접 시작하고 끝난다 -->
+  <g aria-label="올바른 특징점 매칭">
+    <path class="match" d="M80 90 L435 100"/>
+    <path class="match" d="M225 90 L580 100"/>
+    <path class="match" d="M80 245 L435 250"/>
+  </g>
+  <path class="outlier" d="M225 245 L435 100" aria-label="잘못된 특징점 매칭"/>
+
+  <g aria-label="IMAGE A 특징점">
+    <g transform="translate(80 90)"><rect class="halo" x="-4" y="-4" width="8" height="8"/><rect class="keypoint" x="-5" y="-5" width="10" height="10" rx="1"/></g>
+    <g transform="translate(225 90)"><rect class="halo" x="-4" y="-4" width="8" height="8"/><rect class="keypoint" x="-5" y="-5" width="10" height="10" rx="1"/></g>
+    <g transform="translate(80 245)"><rect class="halo" x="-4" y="-4" width="8" height="8"/><rect class="keypoint" x="-5" y="-5" width="10" height="10" rx="1"/></g>
+    <g transform="translate(225 245)"><rect class="halo" x="-4" y="-4" width="8" height="8"/><rect class="keypoint" x="-5" y="-5" width="10" height="10" rx="1"/></g>
+  </g>
+
+  <g aria-label="IMAGE B 특징점">
+    <g transform="translate(435 100)"><rect class="halo" x="-4" y="-4" width="8" height="8"/><rect class="keypoint" x="-5" y="-5" width="10" height="10" rx="1"/></g>
+    <g transform="translate(580 100)"><rect class="halo" x="-4" y="-4" width="8" height="8"/><rect class="keypoint" x="-5" y="-5" width="10" height="10" rx="1"/></g>
+    <g transform="translate(435 250)"><rect class="halo" x="-4" y="-4" width="8" height="8"/><rect class="keypoint" x="-5" y="-5" width="10" height="10" rx="1"/></g>
+    <g transform="translate(580 250)"><rect class="halo" x="-4" y="-4" width="8" height="8"/><rect class="keypoint" x="-5" y="-5" width="10" height="10" rx="1"/></g>
+  </g>
+
+  <g aria-label="범례">
+    <path class="match" d="M227 317 H257"/><text class="legend" x="264" y="321">INLIER</text>
+    <path class="outlier" d="M341 317 H371"/><text class="legend" x="378" y="321">OUTLIER</text>
+  </g>
+</svg>
