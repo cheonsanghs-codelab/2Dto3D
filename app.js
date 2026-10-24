@@ -3,13 +3,9 @@
   const slides = [...document.querySelectorAll('.slide')];
   const progressBar = document.getElementById('progressBar');
   const slideCount = document.getElementById('slideCount');
-  const speakerLabel = document.getElementById('speakerLabel');
-  const timerEl = document.getElementById('timer');
   const overviewPanel = document.getElementById('overviewPanel');
   const overviewList = document.getElementById('overviewList');
   let index = 0;
-  let timerStarted = false;
-  let startTime = Date.now();
   let touchStartX = 0;
 
   slides.forEach((slide, i) => {
@@ -28,7 +24,6 @@
   function updateUI() {
     progressBar.style.width = `${((index + 1) / slides.length) * 100}%`;
     slideCount.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
-    speakerLabel.textContent = slides[index].dataset.speaker;
     document.querySelectorAll('.overview-item').forEach((item, i) => item.classList.toggle('active', i === index));
   }
 
@@ -38,10 +33,6 @@
     slides[index].classList.remove('active');
     index = safe;
     slides[index].classList.add('active');
-    if (!timerStarted) {
-      timerStarted = true;
-      startTime = Date.now();
-    }
     updateUI();
   }
 
@@ -55,17 +46,9 @@
     deck.classList.toggle('notes-open');
   }
 
-  async function toggleFullscreen() {
-    try {
-      if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
-      else await document.exitFullscreen();
-    } catch (_) {}
-  }
-
   document.addEventListener('click', event => {
     const action = event.target.closest('[data-action]')?.dataset.action;
     if (action === 'overview') toggleOverview();
-    if (action === 'fullscreen') toggleFullscreen();
   });
 
   document.addEventListener('keydown', event => {
@@ -78,7 +61,6 @@
       goTo(index - 1);
     }
     if (['s', 'n'].includes(event.key.toLowerCase())) toggleNotes();
-    if (event.key.toLowerCase() === 'f') toggleFullscreen();
     if (event.key === 'Escape') toggleOverview(false);
     if (event.key === 'Home') goTo(0);
     if (event.key === 'End') goTo(slides.length - 1);
@@ -92,11 +74,6 @@
     const delta = event.changedTouches[0].clientX - touchStartX;
     if (Math.abs(delta) > 55) goTo(index + (delta < 0 ? 1 : -1));
   }, { passive: true });
-
-  setInterval(() => {
-    const elapsed = timerStarted ? Math.floor((Date.now() - startTime) / 1000) : 0;
-    timerEl.textContent = `${String(Math.floor(elapsed / 60)).padStart(2, '0')}:${String(elapsed % 60).padStart(2, '0')}`;
-  }, 500);
 
   function randomFactory(seed) {
     let value = seed >>> 0;

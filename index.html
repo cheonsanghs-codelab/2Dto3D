@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#080d10" />
+  <meta name="theme-color" content="#0d1117" />
   <meta name="description" content="코드랩 동아리의 COLMAP·Hunyuan3D 2D 사진 3D 복원 탐구 발표" />
   <title>코드랩 | 2D 사진의 3D 복원</title>
   <link rel="icon" type="image/svg+xml"
@@ -23,20 +23,19 @@
     </header>
 
     <section class="slides" id="slides" aria-label="발표 슬라이드">
-      <article class="slide cover active" data-speaker="A / 지승현" >
+      <article class="slide cover active" data-speaker="지승현" >
         <img class="cover-photo" src="assets/code-background.jpeg" alt="코드가 표시된 화면" />
         <div class="cover-shade"></div>
         <div class="cover-content">
-          <p class="terminal-label">[ STUDIO CODELAB ]</p>
+          <p class="terminal-label">[ CODELAB · 3D RECONSTRUCTION ]</p>
           <h1><span>COLMAP</span><span>HUNYUAN3D</span></h1>
           <p class="cover-title">2D 사진의 3D 복원</p>
-          <p class="cover-members">20824지승현 | 20816김준엽 | 20320김명훈 | 11035황성윤</p>
+          <p class="cover-members">20824 지승현 · 20816 김준엽 · 20320 김명훈 · 11035 황성윤</p>
         </div>
-        <aside class="speaker-notes">안녕하세요. 저희는 프로그래밍 동아리 코드랩입니다. 오늘은 동아리 활동을 간단히 소개한 뒤, COLMAP과
-          Hunyuan3D를 이용한 2D 사진의 3D 복원 탐구를 발표하겠습니다.</aside>
+        <aside class="speaker-notes"><strong>지승현</strong> 안녕하세요. 프로그래밍 동아리 코드랩입니다. 여러분, 물체의 앞면 사진 한 장만 보고 뒷면까지 정확하게 만들 수 있을까요? [잠시 멈춤] 저희는 여러 장의 사진을 이용하는 COLMAP과 사진 한 장으로 3D 모델을 만드는 Hunyuan3D를 직접 사용해 봤습니다. 오늘은 성공과 실패 과정을 보여드린 뒤, 처음 드린 질문으로 다시 돌아오겠습니다.</aside>
       </article>
 
-      <article class="slide" data-speaker="동아리 소개">
+      <article class="slide" data-speaker="지승현">
         <div class="slide-head"><span>01</span>
           <h2>코드랩 활동</h2>
         </div>
@@ -58,11 +57,10 @@
             <figcaption>코드랩 소개 카드</figcaption>
           </figure>
         </div>
-        <aside class="speaker-notes">코드랩은 프로그래밍을 실제 프로젝트에 적용하며 문제 해결 능력을 기르는 동아리입니다. 1학기에는 웹사이트를
-          제작했고, 2학기에는 컴퓨터 비전과 3D 복원으로 활동 범위를 넓혔습니다.</aside>
+        <aside class="speaker-notes"><strong>지승현</strong> 코드랩은 프로그래밍을 배우는 데서 끝내지 않고 직접 결과물을 만들어 보는 동아리입니다. 1학기에는 각자 관심 분야에 맞는 웹사이트를 만들었고, 2학기에는 사진으로 3D 형태를 만드는 기술을 탐구했습니다.</aside>
       </article>
 
-      <article class="slide" data-speaker="탐구1">
+      <article class="slide" data-speaker="지승현">
         <div class="slide-head"><span>02</span>
           <h2>탐구 문제</h2>
         </div>
@@ -74,32 +72,29 @@
             <li class="route-stop"><span>03</span><strong>Hunyuan3D</strong><small>사진 부족 이후 선택한 대안</small></li>
           </ol>
         </div>
-        <aside class="speaker-notes"> 탐구 문제는 ‘2D 사진만으로 3D 형태를 어떻게 복원할 수 있는가?’였습니다. 먼저 COLMAP을 실습했고,
-          3DGS까지 적용하려 했지만 사진이 부족했습니다. 이후 적은 입력에서도 작동하는 Hunyuan3D를 함께 비교했습니다.</aside>
+        <aside class="speaker-notes"><strong>지승현</strong> 이번 탐구는 여름방학에 COLMAP을 접하면서 시작됐습니다. 처음에는 사진을 많이 찍기만 하면 바로 3D 모델이 나올 거라고 생각했습니다. 하지만 직접 해 보니 어떤 대상은 모양이 보였고, 어떤 대상은 점이 흩어져 형태조차 알아보기 어려웠습니다. 왜 이런 차이가 생겼을까요? 먼저 사진 여러 장이 어떻게 연결되는지 살펴보겠습니다. 이 원리는 성윤이가 이어서 설명하겠습니다.</aside>
       </article>
 
-      <article class="slide" data-speaker="탐구 - SfM" >
+      <article class="slide" data-speaker="황성윤" >
         <div class="slide-head"><span>03</span>
           <h2>카메라 시점의 이동</h2>
         </div>
         <div class="sfm-layout">
           <div class="sfm-copy">
-            <p class="command">$ explain sfm</p>
+            <p class="command">SfM의 핵심</p>
             <p>같은 점이 사진마다 다른 위치에 나타나는 현상을 이용해 카메라 위치와 3D 구조를 계산합니다.</p>
             <p class="definition-line"><b>SfM</b> Structure from Motion</p>
           </div><img class="sfm-figure" src="assets/structure-from-motion.svg" alt="SfM 구조" />
         </div>
-        <aside class="speaker-notes"> COLMAP의 핵심은 SfM입니다. 카메라가 이동하며 같은 물체를 촬영하면 사진 속 같은 점의 위치가
-          달라집니다. COLMAP은 이 차이로 카메라 위치와 장면의 3차원 구조를 함께 계산합니다.</aside>
+        <aside class="speaker-notes"><strong>황성윤</strong> COLMAP의 핵심 원리는 SfM입니다. [그림 속 두 카메라와 점 P를 차례로 가리킴] 사람이 두 눈으로 물체의 거리를 느끼는 것처럼, 카메라도 서로 다른 위치에서 같은 물체를 보면 그 점의 위치가 조금씩 달라집니다. COLMAP은 이 차이로 카메라 위치와 물체의 입체 구조를 함께 계산합니다. 그러려면 먼저 사진마다 같은 지점이 어디인지 찾아야 합니다.</aside>
       </article>
 
-      <article class="slide" data-speaker="탐구 - 특징점과 Descriptor" >
+      <article class="slide" data-speaker="황성윤" >
         <div class="slide-head"><span>04</span>
           <h2>특징점과 Descriptor</h2>
         </div>
         <div class="feature-layout">
             <img class="sfm-figure" src="assets/feature-descriptor.svg" alt="특징점 추출" />
-          </svg>
           <div class="term-definitions">
             <div><span>KEYPOINT</span><strong>특징점의 위치</strong>
               <p>모서리, 글자, 무늬처럼 구별하기 쉬운 부분</p>
@@ -109,11 +104,10 @@
             </div>
           </div>
         </div>
-        <aside class="speaker-notes"> 첫 단계는 특징점 추출입니다. 모서리나 글자처럼 구별하기 쉬운 위치가 Keypoint이고, 그 주변의 모습을
-          숫자로 표현한 것이 Descriptor입니다. COLMAP은 SIFT 계열 방법으로 특징을 찾고 설명합니다.</aside>
+        <aside class="speaker-notes"><strong>황성윤</strong> 사진에서 모서리, 글자, 무늬처럼 눈에 잘 띄는 부분을 특징점이라고 합니다. 그리고 특징점 주변의 모습을 숫자로 바꾼 정보가 Descriptor, 즉 설명자입니다. 특징점이 위치를 알려 주는 표지판이라면 Descriptor는 그 표지판을 구별하는 지문과 비슷합니다. 컴퓨터는 이 지문을 비교해 서로 다른 사진에 찍힌 같은 지점을 찾습니다. 실제로 점을 연결하고 잘못된 연결을 거르는 과정은 명훈이가 설명하겠습니다.</aside>
       </article>
 
-      <article class="slide" data-speaker="탐구 - 특징점 매칭과 검증" >
+      <article class="slide" data-speaker="김명훈" >
         <div class="slide-head"><span>05</span>
           <h2>특징점 매칭과 검증</h2>
         </div>
@@ -131,11 +125,10 @@
             </div>
           </div>
         </div>
-        <aside class="speaker-notes"> Descriptor가 비슷한 점을 먼저 연결합니다. Ratio Test는 첫 후보와 둘째 후보가 비슷한 애매한
-          매칭을 지웁니다. 이후 RANSAC이 Epipolar Geometry와 맞지 않는 Outlier를 제거해 신뢰할 수 있는 Inlier만 남깁니다.</aside>
+        <aside class="speaker-notes"><strong>김명훈</strong> [사진 사이의 연결선을 가리킴] 비슷한 특징점을 연결하는 과정이 특징점 매칭입니다. 하지만 비슷하게 생겼다고 모두 같은 지점은 아닙니다. Ratio Test는 가장 비슷한 후보와 두 번째 후보가 거의 비슷해서 확신하기 어려우면 그 연결을 제외합니다. RANSAC은 사진 전체의 움직임과 맞지 않는 연결을 한 번 더 걸러냅니다. 이름은 어렵지만, 결국 애매하거나 튀는 연결을 지우는 과정입니다. 이렇게 믿을 수 있는 연결만 남겼습니다. 이 점들이 실제 3D 좌표가 되는 과정은 성윤이가 이어서 설명하겠습니다.</aside>
       </article>
 
-      <article class="slide" data-speaker="탐구 - 3D 좌표 계산" >
+      <article class="slide" data-speaker="황성윤" >
         <div class="slide-head"><span>06</span>
           <h2>3D 좌표 계산</h2>
         </div>
@@ -159,27 +152,24 @@
             </li>
           </ol>
         </div>
-        <aside class="speaker-notes"> 신뢰할 수 있는 대응점은 Triangulation으로 3D 좌표가 됩니다. COLMAP은 두 사진에서 시작해 새
-          사진을 하나씩 추가하는 Incremental SfM으로 구조를 확장합니다. Bundle Adjustment는 카메라와 3D 점을 함께 조정해 Reprojection Error를 줄입니다.
-        </aside>
+        <aside class="speaker-notes"><strong>황성윤</strong> 앞에서 잘못된 연결을 걸러냈습니다. [두 카메라에서 같은 점으로 이어지는 선을 가리킴] 이제 서로 다른 카메라가 같은 점을 바라보는 두 시선으로 점의 3차원 위치를 찾습니다. 이것이 삼각측량입니다. COLMAP은 처음 두 장에서 시작해 사진을 한 장씩 추가하며 구조를 넓혀 갑니다. 마지막에는 카메라 위치와 3D 점을 한꺼번에 다시 맞춰 작은 오차를 줄입니다. 이 과정이 Bundle Adjustment입니다.</aside>
       </article>
 
-      <article class="slide" data-speaker="탐구 - 희소 재구성" >
+      <article class="slide" data-speaker="황성윤" >
         <div class="slide-head"><span>07</span>
           <h2>희소 재구성</h2>
         </div>
         <div class="cloud-layout"><canvas id="sparseCloud" aria-label="희소 점군 개념 시각화"></canvas>
           <div class="cloud-text">
-            <p class="command">$ colmap mapper</p>
-            <p class="cloud-result">SPARSE<br />POINT CLOUD</p>
+            <p class="command">COLMAP 결과</p>
+            <p class="cloud-result">희소<br />점군</p>
             <p>여러 사진에서 안정적으로 연결된 특징점만 3D 좌표로 남습니다.</p><small>개념 시각화</small>
           </div>
         </div>
-        <aside class="speaker-notes"> 이 과정을 거치면 카메라 위치와 Sparse Point Cloud를 얻습니다. 사진의 모든 픽셀이 아니라
-          안정적으로 매칭된 특징점만 3차원 점이 되기 때문에 점들이 띄엄띄엄 보입니다.</aside>
+        <aside class="speaker-notes"><strong>황성윤</strong> 이 과정을 거치면 희소 점군이 만들어집니다. 여러 사진에서 안정적으로 연결된 특징점만 3D 점으로 남기 때문에 사진 전체가 채워지는 것이 아니라 점들이 띄엄띄엄 보입니다. 그럼 같은 방식으로 촬영해도 실제 결과는 어떻게 달라지는지, 명훈이가 실습 결과를 보여드리겠습니다.</aside>
       </article>
 
-      <article class="slide" data-speaker="탐구 - 실패 사례" >
+      <article class="slide" data-speaker="김명훈" >
         <div class="slide-head"><span>08</span>
           <h2>실패 사례</h2>
         </div>
@@ -195,7 +185,7 @@
             </figure>
           </div>
           <div class="result-copy">
-            <p class="result-keyword error">MATCH FAILED</p>
+            <p class="result-keyword error">복원 실패</p>
             <ul>
               <li><b>사진 중첩 부족</b><span>같은 특징점을 찾기 어려움</span></li>
               <li><b>큰 촬영 각도 차이</b><span>사진 사이 연결 감소</span></li>
@@ -203,11 +193,10 @@
             </ul>
           </div>
         </div>
-        <aside class="speaker-notes"> 첫 실습에서는 점이 일부만 생기거나 잘못된 위치에 흩어져 형태를 알아보기 어려웠습니다. 사진 사이의 공통 영역이
-          적고 촬영 각도가 크게 변했으며, 단색이나 반사 표면에서는 특징점 자체가 부족했습니다.</aside>
+        <aside class="speaker-notes"><strong>김명훈</strong> [원본 사진과 점군을 차례로 가리킴] 먼저 실패 사례입니다. 점이 일부만 생기거나 서로 떨어져 있어서 원래 피규어의 모양을 알아보기 어렵습니다. 사진 사이에 겹치는 부분이 부족했고 카메라 각도도 한 번에 크게 바뀌었습니다. 단색이거나 빛이 반사되는 표면도 같은 특징점을 찾기 어렵게 만들 수 있습니다. 사진의 장수보다 사진들이 서로 잘 이어지도록 찍는 것이 더 중요했습니다.</aside>
       </article>
 
-      <article class="slide" data-speaker="탐구 - 성공 사례" >
+      <article class="slide" data-speaker="김명훈" >
         <div class="slide-head"><span>09</span>
           <h2>성공 사례</h2>
         </div>
@@ -231,7 +220,7 @@
                   alt="성공적으로 복원된 빨간 인형의 인터랙티브 3D 모델" camera-controls auto-rotate
                   auto-rotate-delay="0" rotation-per-second="18deg" interaction-prompt="none"
                   shadow-intensity="1" exposure="1.15" loading="lazy" touch-action="pan-y"></model-viewer>
-                <span class="model-hint">DRAG / ZOOM</span>
+                <span class="model-hint">마우스로 회전</span>
               </div>
               <figcaption class="result-caption-detail">
                 <span>최종 결과</span><strong>물체 윤곽 복원 성공</strong>
@@ -239,11 +228,10 @@
             </figure>
           </div>
         </div>
-        <aside class="speaker-notes"> 사진 사이 중첩을 충분히 확보하고 특징이 많은 대상을 사용하자 점들이 물체 윤곽을 따라 안정적으로 분포했습니다.
-          점군을 Mesh로 바꿔 실제 3D 인쇄물도 제작했습니다. 지금 실물을 보여드리겠습니다.</aside>
+        <aside class="speaker-notes"><strong>김명훈</strong> 반대로 이 사례는 특징이 뚜렷한 대상을 골랐고 앞 사진과 다음 사진이 충분히 겹치도록 일정한 간격으로 촬영했습니다. [대상과 점군을 차례로 가리킴] 앞의 사례와 달리 점들이 물체의 윤곽을 따라 모여 있고 전체적인 형태도 확인할 수 있습니다. 점군을 표면이 있는 메시로 바꾼 뒤 실제로 출력해 봤습니다. [출력물을 들어 보이고 3초 정도 멈춤] 사진 속 점들이 손으로 만질 수 있는 물체가 된 순간이 가장 인상적이었습니다. 여기까지는 여러 사진에서 실제로 확인한 점을 연결하는 방법이었습니다. 사진이 부족할 때 선택한 다른 방법은 준엽이가 설명하겠습니다.</aside>
       </article>
 
-      <article class="slide" data-speaker="탐구 - 3DGS 적용 한계" >
+      <article class="slide" data-speaker="김준엽" >
         <div class="slide-head"><span>10</span>
           <h2>3DGS 적용 한계</h2>
         </div>
@@ -255,11 +243,10 @@
           </div>
           <p class="limitation">사진 수와 촬영 방향이 부족해 안정적인 다중 시점 정보를 확보하지 못했습니다.</p>
         </div>
-        <aside class="speaker-notes"> 원래 COLMAP의 카메라와 점군으로 3DGS를 적용해 더 사실적인 새 시점을 만들 계획이었습니다. 하지만
-          다양한 방향의 사진과 안정적인 카메라 정보가 부족해 원하는 결과를 얻기 어렵다고 판단했습니다.</aside>
+        <aside class="speaker-notes"><strong>김준엽</strong> 저희는 원래 이 결과를 이용해 3DGS도 적용하려 했습니다. 3DGS는 작은 입체 요소들을 공간에 배치해서 카메라를 움직여도 사진처럼 보이는 장면을 만드는 기술입니다. 하지만 사진의 수와 촬영 방향이 부족해 필요한 여러 시점의 정보를 얻기 어려웠습니다. 그래서 이번에는 적용을 보류하고, 사진이 적어도 3D 모델을 만들 수 있는 Hunyuan3D를 사용해 봤습니다. 이 기술은 승현이가 설명하겠습니다.</aside>
       </article>
 
-      <article class="slide" data-speaker="탐구 - Hunyuan3D" >
+      <article class="slide" data-speaker="지승현" >
         <div class="slide-head"><span>11</span>
           <h2>Hunyuan3D</h2>
         </div>
@@ -270,19 +257,18 @@
             <div><span>OUTPUT</span><b>3D 모델</b></div>
           </div>
           <p class="hunyuan-explain">사진에 보이지 않는 옆면과 뒷면도 학습한 형태 정보를 바탕으로 생성합니다.</p>
-          <p class="caution">[ 주의 ] 생성된 뒷면은 실제 관측값이 아니라 AI의 추정 결과입니다.</p>
+          <p class="caution">다만, 보이지 않는 면은 실제 관측값이 아니라 AI가 추정한 결과입니다.</p>
         </div>
-        <aside class="speaker-notes"> 대안으로 사용한 Hunyuan3D는 대표 사진 한 장에서도 전체 3D 모델을 생성합니다. 보이지 않는 옆면과
-          뒷면은 AI가 학습한 형태 정보를 바탕으로 추정합니다. 적은 사진에 유리하지만 실제 뒷면과 다를 수 있습니다.</aside>
+        <aside class="speaker-notes"><strong>지승현</strong> Hunyuan3D는 사진 한 장으로도 3D 모델을 만들 수 있는 AI 기술입니다. [사진, AI, 3D 모델 순서로 가리킴] 사진에 보이는 앞면은 입력 이미지를 참고하지만, 사진에 없는 옆면과 뒷면은 AI가 학습한 여러 형태를 바탕으로 추정해서 만듭니다. 따라서 뒷면이 자연스럽게 만들어졌다고 해서 실제 뒷면을 정확히 알아낸 것은 아닙니다. 두 기술의 차이와 결론은 준엽이가 이어서 설명하겠습니다.</aside>
       </article>
 
-      <article class="slide" data-speaker="탐구 - 복원과 생성" >
+      <article class="slide" data-speaker="김준엽" >
         <div class="slide-head"><span>12</span>
           <h2>복원과 생성</h2>
         </div>
         <div class="diff-layout">
           <section class="diff-col colmap">
-            <p>[-] COLMAP</p>
+            <p>COLMAP</p>
             <h3>관측 기반 복원</h3>
             <ul>
               <li>여러 방향의 사진</li>
@@ -292,7 +278,7 @@
             </ul>
           </section>
           <section class="diff-col hunyuan">
-            <p>[+] Hunyuan3D</p>
+            <p>Hunyuan3D</p>
             <h3>AI 기반 생성</h3>
             <ul>
               <li>한 장 또는 적은 사진</li>
@@ -302,11 +288,10 @@
             </ul>
           </section>
         </div>
-        <aside class="speaker-notes"> COLMAP은 여러 사진의 실제 대응점을 기하학적으로 연결하는 관측 기반 복원입니다. Hunyuan3D는 적은
-          입력에서 보이지 않는 면까지 만드는 AI 기반 생성입니다. 목적과 데이터에 따라 적합한 방법이 달라집니다.</aside>
+        <aside class="speaker-notes"><strong>김준엽</strong> COLMAP은 여러 사진에서 실제로 확인되는 같은 점을 연결해 구조를 복원합니다. 촬영 조건에는 민감하지만 계산에 사용된 점은 사진에서 관측된 정보입니다. Hunyuan3D는 사진이 적어도 전체 모양을 빠르게 만들 수 있지만, 보이지 않는 부분에는 AI의 추정이 들어갑니다. 어느 한쪽이 항상 더 좋은 것이 아니라 목적에 따라 선택해야 합니다.</aside>
       </article>
 
-      <article class="slide conclusion" data-speaker="결론" >
+      <article class="slide conclusion" data-speaker="김준엽" >
         <div class="slide-head"><span>13</span>
           <h2>탐구 결론</h2>
         </div>
@@ -322,24 +307,22 @@
               <p><b>두 방식의 차이</b><br />실제 관측 기반 복원과 AI 기반 생성의 장단점 비교</p>
             </li>
           </ol>
-          <div class="next-study"><span>$ next</span>
+          <div class="next-study"><span>다음 단계</span>
             <p>더 많은 사진으로 Dense Reconstruction과 3DGS 적용</p>
           </div>
         </div>
-        <p class="thank-you">THANK YOU</p>
-        <aside class="speaker-notes"> 이번 탐구로 알고리즘의 각 단계가 연결되어 있고, 입력 데이터의 품질이 결과를 크게 좌우한다는 점을
-          확인했습니다. 3DGS 실패를 Hunyuan3D 비교로 확장한 것도 의미가 있었습니다. 다음에는 더 많은 사진으로 Dense Reconstruction과 3DGS까지 비교하겠습니다. 감사합니다.
-        </aside>
+        <p class="thank-you">감사합니다</p>
+        <aside class="speaker-notes"><strong>김준엽</strong> 이번 탐구에서 확인한 점은 세 가지입니다. 첫째, COLMAP은 사진 사이의 같은 점을 연결해 3D 구조를 계산합니다. 둘째, 사진의 중첩과 촬영 간격이 달라지면 결과도 크게 달라집니다. 셋째, 사진에서 확인한 복원과 AI가 추정한 생성을 구분해서 봐야 합니다. 처음 질문으로 돌아가 보겠습니다. 앞면 사진 한 장만으로 뒷면을 만들 수는 있지만, 그 뒷면이 실제 물체와 같다고 바로 말할 수는 없습니다. 다음에는 더 많은 사진으로 밀집 재구성과 3DGS까지 시도해 보겠습니다. 감사합니다.</aside>
       </article>
     </section>
 
     <footer class="bottombar">
-      <div class="key-guide"><span><kbd>SPACE</kbd> next</span><span><kbd>←</kbd><kbd>→</kbd>
-          nav</span><span><kbd>F</kbd> fullscreen</span><span><kbd>S</kbd> notes</span></div>
+      <div class="key-guide"><span><kbd>SPACE</kbd> 다음</span><span><kbd>←</kbd><kbd>→</kbd>
+          이동</span><span><kbd>S</kbd> 발표 노트</span></div>
       <div class="page-number" id="slideCount">01 / 14</div>
     </footer>
     <aside class="overview-panel" id="overviewPanel" aria-hidden="true">
-      <div class="overview-title"><span>$ cat agenda.txt</span><button type="button" data-action="overview"
+      <div class="overview-title"><span>발표 순서</span><button type="button" data-action="overview"
           aria-label="발표 순서 닫기">ESC</button></div>
       <div id="overviewList" class="overview-list"></div>
     </aside>
