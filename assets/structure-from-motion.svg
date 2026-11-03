@@ -15,8 +15,8 @@
       .projection { fill:#071014; stroke:#00ff91; stroke-width:3; }
       .center { fill:#00c7ee; }
       .baseline { fill:none; stroke:#26383d; stroke-width:1.2; stroke-dasharray:4 7; }
-      .label { fill:#bff8df; font:12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:1.6px; }
-      .small { fill:#8ea49f; font:10px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+      .label { fill:#e6fff2; font:18px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:1px; }
+      .small { fill:#fff; font:16px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
     </style>
   </defs>
 

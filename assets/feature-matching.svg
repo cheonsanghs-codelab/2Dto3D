@@ -15,8 +15,8 @@
       .outlier { fill:none; stroke:#ff5a69; stroke-width:1.8; stroke-dasharray:6 5; }
       .halo { fill:#00ff91; filter:url(#greenGlow); }
       .keypoint { fill:#00ff91; }
-      .label { fill:#bff8df; font:11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:1.5px; }
-      .legend { fill:#8ea49f; font:10px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+      .label { fill:#e6fff2; font:17px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:1px; }
+      .legend { fill:#fff; font:16px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
     </style>
   </defs>
 

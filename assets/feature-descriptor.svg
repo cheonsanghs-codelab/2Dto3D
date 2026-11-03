@@ -19,8 +19,8 @@
       .connector { fill:none; stroke:#00c7ee; stroke-width:1.4; stroke-dasharray:5 5; }
       .grid { fill:none; stroke:#3a4c50; stroke-width:1; }
       .vector { fill:none; stroke:#00ff91; stroke-width:1.8; stroke-linecap:round; marker-end:url(#arrow); }
-      .label { fill:#bff8df; font:11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:1.4px; }
-      .caption { fill:#8ea49f; font:10px sans-serif; }
+      .label { fill:#e6fff2; font:16px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; letter-spacing:.5px; }
+      .caption { fill:#fff; font:17px sans-serif; }
     </style>
   </defs>
 
@@ -68,5 +68,5 @@
   </g>
 
   <text class="label" x="24" y="260">KEYPOINT · LOCATION</text>
-  <text class="label" x="303" y="260">DESCRIPTOR · LOCAL PATTERN</text>
+    <text class="label" x="303" y="260">DESCRIPTOR</text>
 </svg>
